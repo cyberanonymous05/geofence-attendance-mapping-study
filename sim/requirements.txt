@@ -1,0 +1,8 @@
+# Tested with Python 3.13.9. Lower bounds are the minimum we expect to work; the pins below are what produced the results.
+numpy>=2.0
+scipy>=1.11
+pandas>=2.0
+matplotlib>=3.8
+pytest>=8.0
+pyreadr>=0.5
+# exact versions used: numpy==2.3.5 pandas==2.3.3 scipy==1.18.1 matplotlib==3.10.6 pyreadr==0.5.9 pytest==8.4.2

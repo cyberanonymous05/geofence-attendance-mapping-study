@@ -1,0 +1,362 @@
+% Source with record ids (@123) in \cite{}; build_tex.py turns them into verified BibTeX keys -> main.tex
+\documentclass[preprint,12pt]{elsarticle}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,booktabs,longtable,array,graphicx,xcolor,multirow,url}
+\usepackage[hidelinks]{hyperref}
+\usepackage{tikz}
+\renewcommand{\topfraction}{0.9}\renewcommand{\bottomfraction}{0.8}\renewcommand{\textfraction}{0.1}\renewcommand{\floatpagefraction}{0.7}\setcounter{topnumber}{3}\setcounter{bottomnumber}{2}\setcounter{totalnumber}{5}
+\usetikzlibrary{positioning,arrows.meta,fit}
+\input{gen/stats.tex}
+\input{gen/stats_extra.tex}
+\input{gen/stats_ft.tex}
+\input{gen/stats_human.tex}
+\biboptions{sort&compress}
+\journal{Internet of Things}
+\newcommand{\todo}[1]{\textcolor{red}{[#1]}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\emergencystretch=3em
+\begin{document}
+\begin{frontmatter}
+\title{Presence sensing with GPS geofences and LPWAN for automatic attendance: a mapping study, an evidence audit and a research agenda}
+\author[vit]{Dhanisha S}
+\author[vit]{Lakshmi Harika P}
+\author[vit]{Adesh Kanna P}
+\author[vit]{Ananyaa S}
+\affiliation[vit]{organization={Vellore Institute of Technology, Chennai},department={School of Computer Science and Engineering},country={India}}
+
+\begin{abstract}
+Automatic attendance is moving from cards and cameras to phones and radios. Geofencing, which marks a person present when a location fix falls inside a boundary, is now common in attendance applications, and LoRa radios can carry the same logic to devices without a phone. We ran \nQueriesAll{} documented queries on \nSources{} sources, selected \nSelected{} records and verified \nVerified{} against DOI registries. Earlier attendance reviews are mostly organised by sensing modality, and the one geolocation-based review we found is a short narrative without an evidence audit. We audited \nAudit{} geofence-based attendance systems from their abstracts and, for the \ftN{} whose open-access copy carries a Creative Commons licence, from their full texts (AI second-coder agreement on \agN{} papers: $\kappa=\agKappa$). In the full texts, \ftQtwo{} of \ftN{} measure the geofence decision, \ftQone{} handle location error, \ftQthree{} test an attack, none reports energy and none uses LoRa; \hfConsent{} of \hfN{} abstracts mention consent. Thin reporting is not unique to geofencing: of \nOthersRecent{} other attendance systems since 2018, \cmpOacc\% give an accuracy figure in the abstract, against \cmpGacc\% of the geofence systems. We propose a seven-item reporting checklist; \ftScoreZero{} of the \ftN{} papers meet none of its items. A companion simulation on real GPS tracks shows the cost of the gaps: a plain radius test gives 0.455 false events per track-hour, hysteresis removes about 94\% of them, and class changes cut the capacity of one LoRa gateway by about 15\%. We close with a research agenda.
+\end{abstract}
+
+\begin{highlights}
+\item Reproducible mapping of GPS and LPWAN attendance work, DOI-verified references
+\item Full-text audit: boundary error and location attacks are rarely tested
+\item Thin reporting is field-wide: face, RFID and QR systems show the same gap
+\item No audited system uses LoRa; none of the abstracts mentions consent
+\item Seven-item reporting checklist for presence-sensing papers
+\end{highlights}
+
+\begin{keyword}
+attendance \sep geofencing \sep GPS \sep LoRa \sep LPWAN \sep Internet of Things \sep location privacy \sep survey
+\end{keyword}
+\end{frontmatter}
+
+%--------------------------------------------------------------------
+\section{Introduction}
+Calling a register in a large class can take minutes, and paper registers invite proxy marks. Automatic alternatives have multiplied: cards and tags \cite{lim2009rfid,kassim2012based,koppikar2019based}, Bluetooth beacons \cite{noguchi2015student,lodha2015bluetooth}, fingerprint scanners \cite{mohamed2012fingerprint,mittal2015fingerprint}, face recognition \cite{bah2020improved,arsenovic2017facetime,alhanaee2021face} and QR codes \cite{masalha2014students}. Each swaps one chore for another, because someone must carry the card, stand at the reader, face the camera or share a code.
+
+Geofencing removes the reader. A phone or a small tracker reports its position, and software marks the person present when the position falls inside a boundary around the classroom, campus or worksite. The idea is older than attendance applications \cite{reclus2009geofencing,rodriguezgarzon2014geofencing}, and attendance is now its largest single use among the records we retrieved (Section~\ref{sec:domain}). A second line of work attaches the same logic to LoRa nodes, so that presence or boundary breaches can be reported from devices without a phone or Wi-Fi \cite{ahmed2024scalable,j2026fencing}. Both lines depend on things the attendance literature rarely examines: how wrong a location fix can be, how long a battery lasts when fixes are frequent, and how many reports a radio network can carry when a lecture hall empties at once.
+
+Existing reviews do not examine these questions. Table~\ref{tab:prior} lists the \nPriorSel{} attendance reviews that our search found. Most are organised by sensing modality, and only \nPriorGps{} of them mention GPS or geofencing in the abstract, in passing. One, returned only by IEEE Xplore and Scopus and by none of the open sources, is titled for geolocation-based attendance \cite{gupta2025geolocation}. Its text on the publisher's page is a short narrative review of GPS and geofence attendance systems, with GPS inaccuracy, spoofing, privacy and battery use mentioned briefly, no stated search protocol and no audit of what the studies report. We ask:
+\begin{description}
+\item[RQ1] Which sensing technologies support automatic attendance, and how do geofence and LPWAN approaches differ from them?
+\item[RQ2] What evidence do geofence-based attendance systems report, and how do they treat location uncertainty?
+\item[RQ3] Is thin reporting specific to geofencing, or common to attendance systems?
+\item[RQ4] What do the energy, LPWAN and privacy literatures imply for deploying such systems at scale, and what is missing?
+\end{description}
+
+\paragraph{Contributions} (i) A reproducible mapping study over \srcPhrase{}, with every query, count and screening rule published. (ii) A taxonomy of attendance sensing that places GPS geofences and LPWAN nodes beside the better-known modalities, with a quantitative look at reporting practice by modality (Section~\ref{sec:tax}). (iii) An evidence audit of \nAudit{} geofence-based attendance systems from abstracts, with a full-text check of the open-access subset, a blind second coder and a comparison group of \nOthersRecent{} other attendance systems (Section~\ref{sec:audit}). (iv) A cross-layer synthesis of location uncertainty, sampling energy, LPWAN scalability and privacy (Sections~\ref{sec:unc}--\ref{sec:priv}), illustrated by a short summary of a companion simulation (Section~\ref{sec:case}). (v) A people-in-the-loop analysis of privacy, regulation and security, with design requirements (Section~\ref{sec:priv}), and a seven-item minimum reporting checklist scored on the full texts (Section~\ref{sec:checklist}). (vi) A research agenda (Section~\ref{sec:agenda}). We call the work a mapping study, not a systematic review: selection used ranked retrieval and documented rules, not full-text appraisal of every candidate.
+
+\input{gen/tab_prior.tex}
+
+%--------------------------------------------------------------------
+\section{Survey methodology}\label{sec:method}
+We report the method following the PRISMA extension for scoping reviews \cite{tricco2018prismascr}, the nearest reporting guideline to a mapping study, and draw the flow of records after the PRISMA 2020 diagram \cite{page2021prisma}. The completed checklist is a supplementary file. No protocol was registered before the search; the queries, rules and counts are published instead.
+
+\subsection{Sources and search}
+We used four open sources that need no login: OpenAlex, Crossref, arXiv and Semantic Scholar. OpenAlex was the main source because it returns abstracts and metadata for the same query repeatably. Crossref and arXiv were added to test whether another index would surface systems OpenAlex missed. Semantic Scholar throttled anonymous access, so only one query returned (it overlapped with OpenAlex in 87 of 100 records). \srcMissing{} The open-source queries ran on 4 November 2026. In all there were \nQueriesAll{} query runs (\nQueriesOA{} OpenAlex, \nQueriesCR{} Crossref, \nQueriesAX{} arXiv, \nQueriesSS{} Semantic Scholar\srcQueryExtra{}; Appendix~\ref{app:queries}) over articles, reviews, preprints, book chapters and conference papers from 2005. The queries covered geofencing and attendance, GPS and LoRa tracking, competing attendance technologies, LoRa scalability and security, GPS energy and accuracy, location privacy, and existing surveys. We kept the top 100 records by relevance for each open-source query page, and ran the geofence-attendance queries to deeper pages. The Web of Science, Scopus and IEEE Xplore exports contain every record that matched, except for two queries on attendance reviews: Web of Science W6 (1,350 records matched; the first 1,000 by relevance were exported, which is the per-file limit) and Scopus S6 (2,137 matched; the first 2,000 by relevance were exported). Most of the records left out concern medical or school attendance. The sources returned \totRetrieved{} records (\srcOA{} OpenAlex, \srcCR{} Crossref, \srcAX{} arXiv, \srcSS{} Semantic Scholar\srcRecordsExtra{}). After removing duplicates by DOI and title, \unionUnique{} unique records remained. The other sources added \newOther{} records that OpenAlex did not return; \nAuditOnlyOther{} of the \nAudit{} audited systems (Section~\ref{sec:coding}) came only from them.
+
+\subsection{Screening and selection}
+Screening had three stages (Fig.~\ref{fig:flow}); Table~\ref{tab:elig} states the eligibility rules of each stage.
+
+\begin{table}[tbp]\centering\footnotesize
+\caption{Eligibility rules by stage.}\label{tab:elig}
+\begin{tabular}{@{}L{1.7cm}L{5.8cm}L{5.1cm}@{}}\toprule
+Stage & Kept & Removed \\ \midrule
+Search & Articles, reviews, preprints, book chapters and conference papers from 2005 that match a query (Appendix~\ref{app:queries}) & Records before 2005 \\
+Stage 1 & An English abstract, and a title or abstract that matches at least one topic pattern & No abstract, abstract not in English, or no topic match \\
+Stage 2 & Attendance reviews; the geofence papers closest to the questions; every geofence-attendance candidate; for the other topics, surveys and the most-cited primary studies & A retracted paper, off-topic matches (for example LoRA for language models), and records not chosen after title reading \\
+Stage 3 & A registered DOI whose Crossref title matches the retrieved title (similarity at least 0.85) & No DOI, a DOI no registry holds, or a title mismatch \\
+Audit & Geofence records whose title or opening abstract refers to attendance or presence monitoring, with an English abstract & Reviews, non-English abstracts, and geofence systems with no attendance purpose \\
+Full text & Audited papers with an open-access copy that could be read without bypassing access controls & Paywalled papers, and copies that failed to download or were too short \\
+\bottomrule\end{tabular}
+\end{table}
+
+\emph{Stage 1, topic filter.} Records with an English abstract were assigned to topic buckets by regular expressions on the title and abstract (geofence, attendance, LPWAN, GPS energy, GPS error and spoofing, privacy). \nStageOne{} records fell in at least one bucket, including \nGeofenceBucket{} geofence, \nAttBucket{} attendance and \nLpwanBucket{} LPWAN records. The filter is deliberately broad and noisy. It matched, for example, a survey of ``LoRA'' for large language models, which we removed by hand.
+
+\emph{Stage 2, selection.} For each topic we read titles and selected (a) all attendance reviews, (b) the geofence papers closest to our questions, (c) every geofence-attendance candidate, and (d) for the other topics, existing surveys and the most-cited primary studies. We excluded one retracted paper and read the abstracts of the closest works in full, including every LoRa attendance record. This stage involves judgement, and a different reader might choose differently.
+
+\emph{Re-screen.} The Scopus, Web of Science and IEEE exports arrived after this first selection. For the LPWAN, GNSS and location-privacy topics we then listed every stage 1 record we had not selected, ranked by citation count, read the titles and abstracts near the top of each list, and added the on-topic records with high counts (\nRescreen{} added, \nRescreenVer{} of them verified). Highly cited work on LoRa capacity and energy that the first pass had missed was already cited through the authors' earlier work \cite{bor2016scale,georgiou2017scale,casals2017energy}, so the re-screen mostly added surveys, measurement studies and GNSS and privacy methods. Attendance reviews and geofence-attendance candidates follow their own rules above and were not part of this re-screen.
+
+\emph{Stage 3, verification.} Each selected record was checked against Crossref, or against doi.org for DataCite and other agencies, and kept only if the registered title matched the OpenAlex title (string similarity of at least 0.85). \nVerified{} of \nSelected{} passed. Of those that did not, some had no DOI and four had DOIs that no registry holds, although OpenAlex lists them. We did not cite them.
+
+\begin{figure}[t]\centering\footnotesize
+\begin{tikzpicture}[box/.style={draw,rounded corners=2pt,align=center,text width=5.9cm,minimum width=6.1cm,minimum height=0.85cm,inner sep=3pt},side/.style={draw,dashed,rounded corners=2pt,align=center,minimum width=4.9cm,minimum height=0.85cm,inner sep=3pt},arr/.style={-{Latex[length=2mm]}},node distance=0.4cm]
+\node[box] (a) {Records identified: \totRetrieved{}\\\srcFlow{}};
+\node[box,below=of a] (b) {Unique records screened: \unionUnique{}};
+\node[box,below=of b] (c) {Topic-matched records (stage 1): \nStageOne{}};
+\node[box,below=of c] (d) {Selected for the review (stage 2): \nSelected{}};
+\node[box,below=of d] (e) {Included, DOI-verified (stage 3): \nVerified{}};
+\node[side,right=0.5cm of a] (sa) {Duplicates removed: \dupRemoved{}};
+\node[side,right=0.5cm of b] (sb) {No topic match, no abstract\\or not English: \exclStageOne{}};
+\node[side,right=0.5cm of c] (sc) {Not selected after title\\reading: \exclStageTwo{}};
+\node[side,right=0.5cm of d] (sd) {No resolvable DOI: \nDropped{}};
+\foreach \i/\j in {a/b,b/c,c/d,d/e} \draw[arr] (\i) -- (\j);
+\foreach \i/\j in {a/sa,b/sb,c/sc,d/sd} \draw[arr] (\i) -- (\j);
+\node[box,below=0.7cm of e] (f) {Audit candidates: \nAuditCand{} (plus \nAuditLang{} with a non-English abstract, excluded)};
+\node[box,below=of f] (g) {Audited after DOI check: \nAudit{}\\(\nAuditDropped{} dropped: no resolvable DOI)};
+\node[box,below=of g] (h) {Full texts coded (CC licence): \ftN{}\\(of \ftAllN{} usable; second coder on \agN{})};
+\draw[arr] (e) -- (f); \foreach \i/\j in {f/g,g/h} \draw[arr] (\i) -- (\j);
+\end{tikzpicture}
+\caption{Search and screening flow. All counts are generated from the screening files.}\label{fig:flow}
+\end{figure}
+
+\subsection{Audit coding}\label{sec:coding}
+For the audit we kept geofence records whose title or opening abstract refers to attendance or presence monitoring, excluded reviews, and kept only abstracts written in English, because our rules are English patterns (\nAuditLang{} candidates were excluded for this reason, mostly Indonesian-language papers; they are real systems, so the audit describes English-abstract systems only). Fig.~\ref{fig:flow} shows how the audit set was reached.
+
+\emph{Abstract level.} We coded the abstracts with a regular expression for each property (second factor, boundary shape, proxy or fraud wording, any number, privacy wording, LPWAN) and by hand for two properties that patterns cannot judge: whether the abstract reports a measurement of the geofence decision or the position error (as opposed to face-recognition accuracy, latency or usability scores), and whether it states that location error is handled or modelled.
+
+\emph{Full text.} For the audited papers with a downloadable open-access version that carries a Creative Commons licence we coded seven yes/no questions (Table~\ref{tab:fulltext}), written down before coding and applied to keyword-in-context snippets from the full text. A property is coded present only if a snippet gives explicit evidence. We did not bypass paywalls or access controls, and we did not redistribute the texts.
+
+\emph{Second coder.} A second coder, an AI model, coded \agNAll{} randomly chosen full-text papers from the same snippets without seeing our codes; \agN{} of them carry a Creative Commons licence and enter the agreement figures. We report agreement before adjudication, then resolved the one disagreement among them by rereading the source. One author (LHP) then read each of the \ftN{} full texts in full and checked every full-text code against the paper. The author saw the codes first, so this is a check and not an independent re-coding.
+
+\subsection{Comparison group and reporting practice}
+To test whether thin reporting is specific to geofencing, we applied the same abstract-level rules to every non-geofence attendance system in the corpus that is not a review (\nOthers{} records). Modality was assigned from the title, then from the opening abstract, using keywords (face, fingerprint or biometric, RFID, NFC or smart card, BLE or Bluetooth, QR, Wi-Fi). An accuracy figure was extracted from the abstract where a percentage of 50--100 appears next to the word ``accuracy''. These are reported figures on different data sets, so we use them to describe reporting practice, not to rank modalities.
+
+\subsection{Use of AI tools}\label{sec:ai}
+An AI assistant (Claude, Anthropic, used through Claude Code; the session log records the models \texttt{claude-sonnet-5-5} for nearly all responses and \texttt{claude-opus-5-5} for a few, between 3 and 12 November 2026) did four jobs. It wrote the search, screening and analysis scripts. It applied the coding rules to abstracts and to keyword-in-context snippets of full texts as the first coder, and, on a random sample of \agNAll{} papers, as a blind second coder. It drafted the text. And it formatted the manuscript. We used it because the corpus was too large to code by hand in the time we had and because the rules are mechanical enough to script. The assistant read publishers' abstracts and short keyword-in-context extracts of open-access full texts, not whole papers. In a first pass it read extracts of \ftAllN{} open-access papers; \ftLicCC{} of them carry a Creative Commons licence and \ftLicNone{} are free to read but record no Creative Commons licence (the recorded licence of every paper is listed in the supplementary files). PeerJ asks for permission from the copyright holders before copyrighted material is put into an AI tool, and we have not obtained it. The codes for the \ftLicNone{} papers without a Creative Commons licence are therefore not used in any table, figure or count in this article, and the full-text results rest on the \ftLicCC{} papers with a Creative Commons licence alone. The full prompts and session records are kept and can be given to the editor on request. The authors, not the assistant, are responsible for the content. \humanThreat{}
+
+\subsection{Threats to validity}
+Because no protocol was registered, we cannot show that the rules were fixed before the data were seen. Ranked retrieval caps what we see per query, and relevance in these indexes is loose, so the sample is not exhaustive; yearly counts reflect indexing and query design as well as publication volume. \srcThreat{} Abstract-level properties are lower bounds, and the full-text check covers only the \ftCcPct\% of audited papers (\ftN{} papers) whose open-access copy carries a Creative Commons licence, which may differ from the rest. Many audited papers come from small venues (Table~\ref{tab:venue}), and we did not assess venue quality. \humanThreat{} The 2026 count is for a partial year.
+
+%--------------------------------------------------------------------
+\section{Background}
+\subsection{Geofence decisions and location error}
+A circular geofence tests whether the great-circle distance between a fix and a centre is below a radius; the Haversine formula \cite{sinnott1984haversine} is the usual choice. A polygon fence uses a point-in-polygon test, for example ray casting or the winding number. Either test is applied to a measured position, not the true one. Smartphone GPS accuracy depends strongly on the environment \cite{zandbergen2009iphone,merry2019smartphone,schipperijn2014dynamic}, and a recent empirical study of smartphone GNSS for geofenced operation finds that the environment is the main driver of error, with large errors even outdoors next to buildings \cite{palathinkal2026evaluating}. In urban canyons the error can be reduced with 3D city models, for example by correcting pseudoranges \cite{miura2015error}; such methods need building models and extra computation, and none of the \nAudit{} audited abstracts mentions shadow matching, 3D maps or map matching. Errors are also correlated in time: successive fixes tend to err in the same direction. A person standing near the boundary can therefore flip between inside and outside repeatedly (``flapping''). Section~\ref{sec:unc} returns to this.
+
+\subsection{LoRa in brief}
+LoRa is a chirp-spread-spectrum physical layer; LoRaWAN adds a MAC layer in which class-A devices transmit when they have data and listen afterwards. The ALOHA-like access makes capacity depend on the number of devices, the spreading factors in use, the number of channels and the capture effect \cite{augustin2016lora,haxhibeqiri2018survey,jouhari2023survey}. In India the 865--868~MHz band is open to short-range devices under a licence exemption \cite{dot865}; we cite the rule from secondary sources and have not checked the gazette text.
+
+%--------------------------------------------------------------------
+\section{A taxonomy of attendance and presence sensing}\label{sec:tax}
+Table~\ref{tab:tech} organises the approaches we found by what counts as evidence of presence. The comparison is our qualitative synthesis from the cited works; it is not a measurement, and the limitation column mixes what papers report with what follows from the mechanism.
+
+\begin{table}[tbp]\centering\footnotesize
+\caption{Attendance and presence sensing approaches (qualitative synthesis by the authors; the works behind each row are cited in the paragraphs below).}\label{tab:tech}
+{\setlength{\tabcolsep}{4pt}\begin{tabular}{@{}L{2.3cm}L{2.5cm}L{1.9cm}L{2.1cm}L{2.9cm}@{}}\toprule
+Approach & Evidence of presence & User carries & Fixed infrastructure & Typical limitation \\ \midrule
+RFID, NFC, smart card & Card or tag near a reader & Card, tag or phone & Reader at each entry & Cards can be shared; queue at the reader \\
+BLE, Bluetooth & Phone near a beacon & Phone with app & Beacons per room & Phones can be shared; indoor radio varies \\
+Fingerprint, iris, voice & Biometric match & Nothing & Scanner & Hardware cost; queues; hygiene \\
+Face recognition & Face matched on camera or phone & Nothing or phone & Cameras and compute & Privacy; lighting; photo spoofing, hence liveness checks \\
+QR code & Scan of a session code & Phone & Screen or print & Codes can be forwarded \\
+GPS geofence on a phone (Section~\ref{sec:audit}) & Position inside a boundary & Phone with app & None beyond GNSS & Location error; mock locations; battery; privacy \\
+GPS geofence on a LoRa node & Node position, sent over LPWAN & Wearable or card node & LoRa gateway(s) & Node cost; duty cycle; capacity; privacy \\
+RFID plus LoRa & Card read, sent over LPWAN & Card & Reader node and gateway & As RFID, plus range \\ \bottomrule
+\end{tabular}}
+\end{table}
+
+\paragraph{Credential-based} RFID, NFC and smart-card systems are the oldest and most numerous, from early RFID attendance designs \cite{lim2009rfid,kassim2012based} to IoT versions with microcontrollers and cloud back ends \cite{shrivastava2023based,koppikar2019based,miao2020smart,elmrabet2020school}. NFC has also been used, alone \cite{benyo2012student,ayu2014touchin} and in a comparison with RFID \cite{chew2015sensors}. The presence evidence is possession, so a shared card defeats it.
+
+\paragraph{Proximity radio} Bluetooth and BLE beacons tie a phone to a room \cite{noguchi2015student,lodha2015bluetooth}, and BLE indoor positioning has been proposed for classroom attendance \cite{puckdeevongs2020classroom}. Indoor localisation in general is covered by a large survey \cite{zafari2019survey}.
+
+\paragraph{Biometrics and vision} Fingerprint \cite{mohamed2012fingerprint,mittal2015fingerprint,zainal2014design} and face recognition \cite{bah2020improved,arsenovic2017facetime,wagh2015attendance,sunaryono2021android,alhanaee2021face} dominate the literature by volume. Vision systems have been extended to crowded classrooms with a phone camera \cite{mery2019student}, to deep-learning pipelines \cite{fu2017university} and to liveness detection \cite{surantha2024lightweight}. The ethics of facial recognition and of surveillance in education is a recurring concern \cite{almeida2021ethics,pea2022four}.
+
+\paragraph{Code- and app-based} QR attendance \cite{masalha2014students} is cheap, but a systematic review of QR systems reports security measures such as randomised and dynamic codes combined with geofencing and device identifiers \cite{jodihendrawan2025code}, which suggests the code alone is not trusted.
+
+\paragraph{Location-based} Geofence attendance on phones is the subject of Section~\ref{sec:audit}. The LoRa-based attendance designs we found use cards, tags or NFC as the presence sensor and LoRa as the backhaul: a smart-card module for a large campus area evaluated by RSSI, SNR and packet loss \cite{noprianto2023application}, an RFID and ESP32 design \cite{karuppanan2026digitalized}, an RFID and LoRa system tested to 133~m outdoors \cite{khurshid2025fusion}, a UTAUT adoption study of a LoRa attendance device with 40 respondents \cite{seta2023adoption}, and LoRa-based child-tracking and safety platforms that include attendance \cite{ztrk2019design,s2024safecomm}. None of the abstracts mentions GPS or geofencing. LoRa geofencing exists elsewhere, for livestock, patients and wildlife \cite{ahmed2024scalable,j2026fencing,andika2026lora,lopezescobar2025wildlife}, but we found no work that places a GPS geofence on a LoRa node to take attendance.
+
+\subsection{Reporting practice across modalities}\label{sec:modality}
+Table~\ref{tab:modality} counts the \nOthers{} non-geofence attendance systems in the corpus by modality and shows how often their abstracts report an accuracy figure, a sample size, spoofing concerns and privacy. Face recognition dominates (\modFace{} records), followed by fingerprint, iris or voice (\modBio{}), RFID (\modRfid{}), QR (\modQr{}), NFC or smart card (\modNfc{}), BLE (\modBle{}) and Wi-Fi (\modWifi{}); \modUnspec{} do not name a modality. Reporting is thin everywhere. Even for face recognition, only \modAccPctFace\% of abstracts give an accuracy percentage, with a median of \modAccMedFace\%; for RFID the share is \modAccPctRfid\%. Sample sizes are rarer still. Reported accuracies cluster at the top of the scale and come from different data sets, so they should not be compared across rows.
+
+\input{gen/tab_modality.tex}
+
+\subsection{Geofencing beyond attendance}\label{sec:domain}
+Geofencing is older and wider than attendance. Records outside attendance cover COVID-19 containment zones and quarantine monitoring \cite{mallik2020development,alqrnawi2021covid,mahapatra2022based}, livestock, wildlife and farming \cite{ilyas2020smart,cabraldemel2022current,j2026fencing,andika2026lora}, drone airspace \cite{kim2022airspace}, fleet tracking \cite{raikar2023fleet}, geofenced autonomous-vehicle services \cite{gurumurthy2021system}, and location-based content in museums \cite{ivanov2023exhibitxplorer,ivanov2022delivering}, with reviews in population health and behavioural research \cite{tobin2023geofencing,shevchenko2024geofencing}. Table~\ref{tab:domain} classifies the \nGeoAll{} geofence-titled records in the corpus. Attendance and workforce records are the largest group (\domAtt{}, \domPctAtt\%), ahead of marketing, tourism and location services (\domMkt{}), transport and logistics (\domVeh{}), health and care (\domHealth{}) and livestock and wildlife (\domLive{}). LoRa or LPWAN appears in only \domLoraTotal{} of the \nGeoAll{} records, \domLoraLive{} of them in livestock and wildlife. The breadth matters for this survey in two ways: the boundary-error question is not special to classrooms, and decision logic developed for one domain should transfer to the others.
+
+\input{gen/tab_domain.tex}
+
+%--------------------------------------------------------------------
+\section{Geofence attendance systems: an evidence audit}\label{sec:audit}
+\subsection{Growth and design patterns}
+Of the \nAudit{} systems, \aEarly{} date from 2022 or earlier, \aYtwentythree{} from 2023, \aYtwentyfour{} from 2024, \aYtwentyfive{} from 2025 and \aYtwentysix{} from 2026 so far (Fig.~\ref{fig:year}); \aRecent{} (\pRecent\%) are from the last two years. The pattern most likely reflects both real growth and the indexing of small venues, and we cannot separate the two.
+
+\begin{figure}[t]\centering
+\includegraphics[width=0.62\linewidth]{gen/fig_year.pdf}
+\caption{Geofence attendance systems in the audit, by year (\nAudit{} systems). The hatched bar is a partial year.}\label{fig:year}
+\end{figure}
+
+Table~\ref{tab:audit} lists the audited properties. Most systems treat the geofence as one check among several: \aSecond{} (\pSecond\%) add a second factor, most often face recognition (\aFace), another biometric (\aBio), QR codes (\aQr) or RFID, NFC or BLE (\aRfid). Where the boundary shape appears in the abstract, circles are more common (\aCircle) than polygons or boxes (\aPoly). A few add rules on top of the geofence: attendance is credited only after 80\% of the class duration spent inside \cite{edafeajiroke2026dwell}, or when more than 90\% of the time is spent inside \cite{x2022mobile}. One design builds a polygon from users' geotags and checks it against a static campus polygon \cite{premitasari2025dynamic}.
+
+\input{gen/tab_audit.tex}
+
+\subsection{What the abstracts report}
+Only \aQuant{} of \nAudit{} abstracts (\pQuant\%) report any number. Most of these measure something other than the geofence: face-recognition accuracy, response time, a usability score or a questionnaire. \aMetric{} (\pMetric\%) report a measurement of the geofence decision or the position error:
+\begin{itemize}
+\item A teacher-presence application reports 100\% accuracy over 30 test runs \cite{mughni2023teacher}.
+\item A face-and-geofence system reports 100\% location validation on five test coordinates, and 90\% accuracy over 30 combined location-and-face scenarios \cite{wirana2026implementation}.
+\item A hostel system reports 97.2\% geofencing accuracy with fifty student accounts \cite{n2026smart}.
+\item A police-office deployment reports geofencing accuracy of 92.18\% in open areas, falling to 71.33\% in urban environments \cite{fernandez2025facial}. It is the only abstract in the audit that reports accuracy by environment.
+\item A nurse working-hours study reports a positioning error of 1.4--3.7~m and a delay of 4.45--15.30~s when the user's position switches, depending on the device \cite{anonNonemonitoring}.
+\item A session-bound attendance protocol simulates false acceptance and rejection under three location-error models over 30 seeds \cite{amoanu2026session}. At 15~m reported accuracy a fixed-radius rule gives 4.15\% false acceptance and 3.70\% false rejection; weighting the rule by reported uncertainty removes false acceptance but raises false rejection to 20.30\%.
+\end{itemize}
+The last item is the only audited abstract that quantifies the trade-off between letting the wrong person in and keeping the right person out. The same abstract reports that a forwarded token paired with fabricated inside-geofence coordinates was accepted \cite{amoanu2026session}, which is the only location-spoofing outcome in the audit.
+
+\subsection{Location error, spoofing, privacy and scale}
+\aLocerr{} abstracts state that location error is handled or modelled \cite{korkortsi2026cross,premitasari2025dynamic,amoanu2026session,firdausiyah2026based}: dynamic geofencing that adapts to location errors, a distance tolerance, an uncertainty weight, and a fallback when location is unavailable or inaccurate. \aSpoof{} (\pSpoof\%) mention proxy attendance, fraud or spoofing as a motivation, but a keyword scan for adversarial outcomes finds only three abstracts that report one. Two test the face factor, with a false accept rate of 80.0\% at a face library's default threshold \cite{akintunde2026smart} and screen-replay attacks scored by a liveness model \cite{kumar2026geosecure}; one tests the location factor \cite{amoanu2026session}. Only \aPriv{} abstracts mention privacy or data protection, although every system collects a person's position over time. No audited system uses LoRa or any LPWAN, and none reports energy measurements or capacity in its abstract.
+
+\subsection{Is thin reporting specific to geofencing?}\label{sec:compare}
+Table~\ref{tab:compare} applies the same abstract-level rules to \nOthersRecent{} other attendance systems from 2018 onward. Reporting is thin there too: \cmpOacc\% give an accuracy figure and \cmpOsample\% a sample size in the abstract, against \cmpGacc\% and \cmpGsample\% for the geofence systems. Geofence systems mention spoofing, proxy attendance or fraud more often (\cmpGspoof\% against \cmpOspoof\%) and mention privacy about as rarely (\cmpGpriv\% against \cmpOpriv\%). We therefore read the thin evidence as a habit of the attendance literature, not a failing of geofencing in particular. The audited papers are also concentrated in small venues: Table~\ref{tab:venue} splits them by venue type, but only \nCore{} of \nAudit{} are in OpenAlex core sources, \nOA{} are open access, and the counts per group are small. What is specific to geofencing is the property the abstracts rarely mention: how the boundary decision copes with position error, and how the location factor withstands manipulation.
+
+\input{gen/tab_compare.tex}
+\input{gen/tab_venue.tex}
+
+\subsection{Full-text check}\label{sec:fulltext}
+Abstracts understate what papers do, so we also coded the full texts of the audited systems whose open-access copy carries a Creative Commons licence. Of \ftTried{} audited papers, full text was usable for \ftAllN{} (\ftPct\%); \ftNoOA{} are not open access, \ftShort{} resolved only to a landing page or a short page, and \ftErr{} failed to download. Of the \ftAllN{} usable texts, \ftN{} (\ftCcPct\% of the audited papers) carry a Creative Commons licence and are the basis of Table~\ref{tab:fulltext}; the other \ftLicNone{} are free to read but record no such licence and are left out (Section~\ref{sec:ai}). A blind AI second coder agreed with the first on \agPct\% of \agJ{} judgements over \agN{} of these papers (Cohen's $\kappa=\agKappa$; $\kappa$ is undefined for the three questions where neither coder found a yes). The one disagreement was resolved by rereading: a forwarded-token attack that the paper's abstract reports but the snippets did not show (kept as yes).\humanSentence{} The author check of all \ftN{} papers is described in Section~\ref{sec:coding}. The check changed none of the \ftCodes{} full-text codes.
+
+Reading the full text changes the picture only a little. Location error is handled or analysed in \ftQone{} of \ftN{} papers, against \ftAbsQone{} by abstract; the geofence decision is measured in \ftQtwo{} (\ftAbsQtwo{} by abstract); \ftQthree{} report an adversarial test; and the fence itself (a radius or polygon) is stated in \ftQseven{}. None states a location sampling policy, reports energy or discusses privacy beyond a passing word. Abstract-level coding therefore undercounts, mainly for location-error handling, but what abstracts omit is mostly absent from the papers too. With \ftN{} papers the counts are small, and the \ftLicNone{} papers left out for copyright reasons may differ.
+
+\input{gen/tab_fulltext.tex}
+
+%--------------------------------------------------------------------
+\section{Boundary decisions under location uncertainty}\label{sec:unc}
+Outside attendance, the geofencing literature treats uncertainty more directly. Reliability of proactive location services depends on the geofence configuration, and a web service has been proposed that estimates how reliable a service is for a given fence \cite{garzon2016reliable}. When fixes are sparse because of weak signal, privacy or energy saving, an entry can go unnoticed, and short-term location prediction has been used to compute the probability of entering a fence \cite{nguyen2022reliable}. Cellular signal comparison offers a low-energy and privacy-preserving way to detect arrival at a known place \cite{bareth2012privacy}. Fence geometry has been designed from data \cite{sasaki2023adaptable,sasaki2024data,otaki2026data}, UWB positioning has been examined for geofencing in a factory safety case \cite{hodge2022analysing} and with a one-class classifier \cite{oi2025based}, and an outsourced scheme uses Bloom filters to keep locations private \cite{bosch2018efficient}. Learning-based methods have also been proposed: neural networks that decide whether a point lies inside a fence \cite{eldhojohn2021tuning} and meta-reinforcement learning for tracking \cite{famili2025harnessing}.
+
+Decision logic can be arranged on a ladder of increasing protection against error:
+\begin{enumerate}
+\item a single-fix radius test, which the audit shows is the usual choice;
+\item a polygon test, which matches the shape of campuses \cite{premitasari2025dynamic};
+\item a hysteresis band, which requires the measured distance to pass the boundary by a margin;
+\item $k$-of-$n$ confirmation or a dwell time, as in \cite{edafeajiroke2026dwell,x2022mobile};
+\item sequential evidence accumulation, a CUSUM-style detector \cite{page1954cusum};
+\item uncertainty-weighted acceptance \cite{amoanu2026session}; and
+\item prediction across gaps in the fixes \cite{nguyen2022reliable}.
+\end{enumerate}
+Steps 3 to 5 are standard in signal detection, but we found no attendance paper that analyses them, and the audit finds dwell rules without a justification for the dwell length. The companion study in Section~\ref{sec:case} measures steps 1, 3, 4 and 5 on real tracks.
+
+%--------------------------------------------------------------------
+\section{Energy and sampling}\label{sec:energy}
+Taking fixes is the dominant cost of a GPS tracker, and a long line of work reduces it by duty cycling and by using cheaper sensors to bound the uncertainty. Examples include adaptive GPS duty cycling with radio ranging \cite{jurdak2010adaptive}, EnTracked \cite{kjaergaard2009entracked}, rate-adaptive positioning \cite{paek2010raps}, EnLoc \cite{constandache2009enloc}, energy--accuracy trade-offs for continuous location \cite{lin2010aloc} and DuctiLoc \cite{katsikouli2023ductiloc}. Studies of smartphone applications examine how GPS signal strength affects power use and how to cut the energy of GPS-based location sensing \cite{tawalbeh2016greener,oshin2012improving}. For LoRa nodes, GPS-free localisation is possible from gateway measurements \cite{fargas2017gpsfree} and has been surveyed \cite{gu2018lora,tahaei2025overview,janssen2023survey,moradbeikie2021gnss}, and public Sigfox and LoRaWAN fingerprint data sets cover large urban and rural areas \cite{aernouts2018sigfox}, but RSSI-based approaches are coarse, and a geofence at campus scale needs metre-level decisions. LoRa trackers that keep the GPS off until needed report battery savings: a cattle geofence system reports 93\% geofencing accuracy and about 35\% battery saving from conditional GPS operation \cite{j2026fencing}, and energy-efficient LoRa GPS trackers have also been built for dementia patients and for wildlife \cite{hadwen2017dementia,lopezescobar2025wildlife}. Energy models for LoRa nodes \cite{bouguera2018energy,casals2017energy} and for LPWAN technologies \cite{singh2020energy} are available, but none of the full texts we coded reports energy.
+
+One factor is easy to miss. Energy estimates need a time per fix. A hot start with retained ephemeris takes a second or two, while a cold start can take tens of seconds, and adaptive sampling loses most of its advantage if every fix is a cold start. Section~\ref{sec:case} gives numbers.
+
+%--------------------------------------------------------------------
+\section{LPWAN scalability and synchronised arrivals}\label{sec:lpwan}
+The LoRa capacity literature is large. Surveys cover the technology and its applications \cite{haxhibeqiri2018survey,sinha2017survey}, compare it with other LPWAN technologies \cite{mekki2019comparative} and set out application requirements \cite{chaudhari2020lpwan}; others treat scalable LoRaWAN for massive IoT \cite{jouhari2023survey}, adaptive data rate \cite{kufakunesu2020survey} and energy efficiency \cite{cheikh2022multi,banti2022lorawan}. One experimental study tests the manufacturer's claims \cite{liando2019known}. Analytical and simulated studies ask whether LoRa scales \cite{bor2016scale,georgiou2017scale,adelantado2017limits,haxhibeqiri2017sim}, how imperfect orthogonality changes the answer \cite{mahmood2019scalability,croce2018impact}, what frame collisions look like \cite{rahmadhani2018collide} and what smart-metering deployments can reach \cite{varsier2017capacity}. Measurement studies report coverage and scalability \cite{petjjrvi2017performance,sancheziborra2018performance} and reliability on a testbed \cite{cattani2017experimental}; power and spreading-factor control address the near--far effect \cite{reynders2017power}, and the effect of bidirectional traffic has been examined \cite{pop2017does}. Scheduling \cite{reynders2018scheduling,haxhibeqiri2019overhead}, a time-slotted design \cite{zorbas2020lora}, a slotted-ALOHA overlay \cite{polonelli2019slotted} and alternative random-access protocols \cite{beltramelli2021lora} raise capacity at the cost of synchronisation or protocol changes.
+
+These analyses mostly assume independent traffic. Attendance traffic is not independent. Presence changes cluster at timetable boundaries, so the load a gateway sees in the minute after a lecture ends is a multiple of its daily mean. The LoRa attendance papers we found report coverage and link quality (RSSI, SNR, packet loss, range) \cite{noprianto2023application,khurshid2025fusion}; none of the abstracts evaluates capacity under synchronised arrivals. A lecture hall is an indoor setting, and indoor LoRaWAN deployments have been examined in a case study \cite{neumann2016indoor}. The LoRa geofencing papers report range and latency, such as up to 1~km at an RSSI of $-105$~dB for elephant monitoring \cite{andika2026lora}, or a mesh design for remote communities \cite{ahmed2024scalable}. Section~\ref{sec:case} quantifies the burst effect on real class-change data.
+
+%--------------------------------------------------------------------
+\section{People in the loop: privacy, regulation and security}\label{sec:priv}
+An attendance system is a cyber-physical system with a person in the loop: the person carries the sensor, is judged by the decision, and bears the cost of a wrong one. This section looks at the system from that side.
+
+\subsection{Location data about people}
+A geofence attendance system records where a person is, and when, for as long as the log is kept. The location-privacy literature is large \cite{liu2018location,krumm2009privacy,beresford2003location}, including anonymity-based schemes \cite{fei2019anonymity} and a comparative overview of methods \cite{chatzikokolakis2017methods}. Obfuscation and differential-privacy methods exist for location-based services \cite{wang2012l2p2,wang2023efficient}. They blur the position, and an attendance decision needs an accurate position near the boundary, so noise large enough to hide a person is likely to flip the decision; this is our reading, not a result of the cited papers. India's Digital Personal Data Protection Act 2023 \cite{dpdp2023} has been evaluated for privacy rights and state surveillance \cite{poulomibanerjeedrsrijanmishra2026evaluating}, and student data raise further concerns \cite{huang2023ethics,pea2022four}. In the \ftN{} full texts we coded, none discusses privacy beyond a passing word. A keyword scan of the \hfN{} audited abstracts finds \hfConsent{} that mention consent or an opt-in or opt-out choice.
+
+\subsection{Legal duties that shape the design}
+This is a summary of duties that bear on design, not legal advice, and the texts should be read in full. Under the GDPR \cite{gdpr2016}, personal data must be collected for a stated purpose, limited to what is needed and kept no longer than necessary (Art.~5(1)). Consent is unlikely to be freely given where the person and the controller stand in a clear imbalance of power (Recital~43), which describes an institution and its students or staff. The effect of the GDPR on location data in particular is discussed in \cite{georgiadou2019location}. India's Digital Personal Data Protection Act 2023 \cite{dpdp2023} likewise ties processing to consent or to listed legitimate uses, requires notice to the person, lets the person withdraw consent, and requires erasure once the purpose is served. Section~9 adds two rules for children (persons under 18): verifiable consent of a parent or guardian, and a bar on tracking or behavioural monitoring of children. Rules made under the Act can exempt classes of data fiduciary from both, and the Digital Personal Data Protection Rules 2025 do so for educational institutions: the Fourth Schedule (Part A, entry 3, referred to from rule 12) lifts sections 9(1) and 9(3) only for tracking and behavioural monitoring done for the institution's educational activities or in the interests of the safety of children enrolled with it \cite{dpdp2025rules}. A continuous location log of a school pupil sits close to the monitoring that section~9 restricts, so an attendance system for minors needs a legal reading before deployment. We do not settle which systems are exempt.
+
+Two design consequences follow from these principles, not from the audit. An inside-or-outside decision needs less data than a position track, so evaluating the fence on the phone or tracker and sending only boundary events meets the minimisation principle more easily than uploading raw fixes. And a retention period has to be chosen and stated, because a log kept for ever serves no attendance purpose.
+
+\subsection{Where the person is the weak point}
+\emph{The location factor attests a phone, not a person.} A friend who carries two phones, a mock-location app or a shared login defeats it. In the audit, a keyword scan finds \hfDevBind{} of \hfN{} abstracts that mention a device identifier such as an IMEI or device ID, and \ftQthree{} of \ftN{} full texts report an attack test.
+
+\emph{Errors fall on people unequally.} A false absence can cost a student exam eligibility, while a false presence helps someone who cheats. Papers report an accuracy figure but not who is misclassified or what happens next. A plain radius test produced 0.455 spurious events per track-hour in the companion study (Section~\ref{sec:case}), and a spurious exit event can turn a present person into an absent one unless the rule or a human corrects it. We did not code whether the audited papers describe an appeal or override route, and a keyword scan is too coarse to report a number.
+
+\emph{Consent is weak in captive populations.} Qualitative work on workplace monitoring reports how workers understand and respond to surveillance technologies \cite{sum2025always}. If students cannot refuse in practice, the system needs an equal alternative for people who decline or have no suitable phone, and the cost of running two systems should be counted. Face recognition raises privacy and bias concerns of its own \cite{almeida2021ethics,pea2022four}; a geofence avoids biometrics but not inequality of devices, since older phones and denied location permissions give worse fixes or none.
+
+Table~\ref{tab:human} turns these points into design requirements and states what the audit can say about each.
+
+\begin{table}[tbp]\centering\footnotesize
+\caption{Design requirements for presence sensing with a person in the loop, the basis of each, and what the audit evidence shows. ``Not coded'' means we did not code the property.}\label{tab:human}
+\begin{tabular}{@{}L{4.4cm}L{3.5cm}L{4.4cm}@{}}\toprule
+Requirement & Basis & Audit evidence \\ \midrule
+Evaluate the fence on the device and send only the event & GDPR Art.~5(1); purpose limits in the DPDP Act & Not coded; privacy is discussed in \ftQsix{} of \ftN{} full texts \\
+State a retention period and erase when the purpose ends & GDPR Art.~5(1); DPDP Act erasure duty & Not coded \\
+Offer an equal alternative to people who decline or cannot use a phone & GDPR Recital~43; withdrawal of consent under the DPDP Act & Consent, opt-in or opt-out in \hfConsent{} of \hfN{} abstracts \\
+Bind the record to a device and test relay, mock-location and shared-device attacks & Security (Section~\ref{sec:sec}) & Device identifier mentioned in \hfDevBind{} of \hfN{} abstracts; an attack test in \ftQthree{} of \ftN{} full texts \\
+Give a route to correct a wrong record & A false absence harms the person & Not coded \\
+Check the age rules before tracking pupils under 18 & DPDP Act section~9 & Not coded \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Attacks on location and radio}\label{sec:sec}
+
+Security has two sides. Location can be forged: the requirements for a successful GPS spoofing attack are well studied \cite{tippenhauer2011spoofing,psiaki2016gnss}, spoofing in networks of drones has been reviewed systematically \cite{altaweel2023spoofing}, and detection methods include dual-receiver correlation of encrypted signals \cite{psiaki2013spoofing}, multi-receiver detection \cite{jansen2016multi}, a single-antenna correlator technique \cite{schmidt2020spoofing} and checks on the outputs of commercial receivers \cite{manfredini2018effective}. A software-level attack, such as a mock location on a phone, needs no radio hardware at all and is what the audited systems most often mention. The radio can also be attacked: LoRaWAN has known weaknesses in activation, key handling and the join procedure \cite{yang2018security,aras2017exploring,butun2018security,tomasin2017security,ruotsalainen2022lorawan,hessel2022lorawan}. Timing is a less discussed leak. Even with encrypted payloads, packet times reveal when someone crosses a boundary, and our companion study measures this (Section~\ref{sec:case}).
+
+%--------------------------------------------------------------------
+\section{Case study: what the neglected issues cost}\label{sec:case}
+To show that the gaps in Sections~\ref{sec:audit}--\ref{sec:lpwan} matter, we summarise a companion simulation study (Dhanisha S, Lakshmi Harika P, Adesh Kanna P and Ananyaa S, unpublished data, 2026). It is a simulation and a replay of public data, with no new hardware measurements, and it is included to give orders of magnitude, not as a contribution of this survey. It uses a 10-byte LoRa packet with a counter and a truncated HMAC, a hysteresis-plus-dwell detector and boundary-proximity adaptive sampling. Real position errors come from the GeoLife GPS trajectories \cite{zheng2009geolife} and real crossing times from the StudentLife dataset \cite{wang2014studentlife}. The simulator, and a script that checks every number in Table~\ref{tab:case} against its result files, are in the repository \todo{URL to be added}.
+
+\begin{table}[tbp]\centering\footnotesize
+\caption{Companion-study results for the issues raised by the audit (simulation and replay of public data).}\label{tab:case}
+\begin{tabular}{@{}L{3.2cm}L{9.4cm}@{}}\toprule
+Issue (section) & Result \\ \midrule
+Flapping at the boundary (\ref{sec:unc}) & On 311 real pedestrian segments (255 track-hours), a plain radius test gave 0.455 spurious events per track-hour (95\% interval 0.330--0.627, resampling users). A hysteresis detector with adaptive sampling gave 0.027 (0.011--0.049), about 94\% fewer, while missing 1.6\% of proxy-truth transitions at a $\pm$10~m tolerance. Mean detection delay was 29.4~s. \\
+Is a better detector available? (\ref{sec:unc}) & An evidence-accumulation detector improved on the best hysteresis settings by only 1--4~s (3--14\%) at equal false-toggle rates. The choice of band width mattered more than the detector family. \\
+Sampling and fix time (\ref{sec:energy}) & On the real tracks, adaptive sampling cut fixes from 720 to 144 per hour ($5.0\times$) and the modelled battery life rose from 1.8 to 8.8 days, assuming a 2~s fix. In the simulated scenario, battery life fell from 14.8 days with 2~s fixes to 2.0 days with 15~s fixes. \\
+Synchronised arrivals (\ref{sec:lpwan}) & On real student-day crossing times, a single gateway at 95\% event delivery carried about 6{,}700 students, against 7{,}900 for the same events spread uniformly: ordinary class changes cost about 15\%. If every student crosses at the same second, 240~s of random delay supports about 1{,}000 students, and one blind repetition about 2{,}100. \\
+Timing leakage (\ref{sec:priv}) & A passive eavesdropper estimated crossing times to a median 4~s (97\% within a minute) without random delay, and to 60~s (50\% within a minute) with 240~s of delay. Delay blurs timing; it does not hide it. \\ \bottomrule
+\end{tabular}
+\end{table}
+
+Three points follow. First, the false-event rate of the plain test is large enough to matter for a daily roll call, so the first rung of the decision ladder is not safe to use alone. Second, the more elaborate detector is not the main lever; the margin and the sampling policy are. Third, burst effects on capacity are real but moderate for ordinary timetables, and severe only for hard synchronisation such as a bell or a bus departure. The companion study's own limitation applies here: energy and radio figures are modelled, not measured, and the burst study uses one university's timing. We cite it to size the problems, not to prove the solutions.
+
+%--------------------------------------------------------------------
+\section{A minimum reporting checklist}\label{sec:checklist}
+Sections~\ref{sec:audit}--\ref{sec:priv} show the same pattern: the properties that decide whether a presence system can be trusted are the ones papers leave out. We turn the seven full-text questions of Section~\ref{sec:fulltext} into a checklist of items that an attendance or presence-sensing paper should report (Table~\ref{tab:checklist}). The items were chosen because each decides something a reader needs. R1 and R2 say whether the decision is right, R3 whether it can be gamed, R4 and R5 whether it can run on a battery, R6 whether it can run lawfully, and R7 whether anyone can repeat it. R2, R3 and R6 apply to every modality, so an RFID, QR or face system can be scored on them too.
+
+\input{gen/tab_checklist.tex}
+
+\begin{figure}[tbp]\centering
+\includegraphics[width=0.82\linewidth]{gen/fig_reporting.pdf}
+\caption{Share of the \ftN{} full-text-coded papers (Creative Commons licence) that meet each reporting item R1--R7. Labels give papers met of papers coded.}\label{fig:reporting}
+\end{figure}
+
+Applied to the \ftN{} full texts, \ftScoreZero{} papers meet none of the seven items, \ftScoreOne{} meet one, \ftScoreTwo{} meet two and \ftScoreThree{} meet three; none meets more (Fig.~\ref{fig:reporting}). The papers with three are \ftBestCites{}. This is a description of reporting, not a ranking of quality: several papers are short application descriptions that never set out to evaluate anything. A trial size and a source of ground truth belong on the list as well, but we did not code them in the full texts, so Table~\ref{tab:checklist} omits them; at abstract level a sample size appears in \cmpGsample\% of the geofence abstracts and \cmpOsample\% of the other attendance abstracts.
+
+We suggest that authors report R1--R7 as ``yes'', ``no'' or ``not applicable'', each with a section number, in a short table. The checklist has limits. It was derived from the same papers it scores, so the counts are a description and not a validation. Nobody outside the author team has tested the wording, no item is weighted, and an item can be met with weak evidence. We publish the codebook and the coding sheets so that others can refine the items.
+
+%--------------------------------------------------------------------
+\section{Open challenges and research agenda}\label{sec:agenda}
+\begin{enumerate}
+\item \textbf{A shared benchmark.} The audit finds no common test. A benchmark should supply ground-truth trajectories with labelled crossings, realistic error models and agreed metrics: false events per hour, detection delay, missed crossings and roll-call accuracy. GeoLife and StudentLife are starting points \cite{zheng2009geolife,wang2014studentlife}, but neither was built for attendance.
+\item \textbf{Report and use location uncertainty.} Phones expose a reported accuracy. The only abstract that uses it shows a large false-rejection price for the safety gained \cite{amoanu2026session}. Decision rules that trade the two errors explicitly, and are validated on real tracks, are missing.
+\item \textbf{Adversarial evaluation of the location factor.} Mock locations, relayed or forwarded tokens, shared devices and replayed packets should be tested and the outcomes reported, as one audited paper does for a forwarded token \cite{amoanu2026session}.
+\item \textbf{Energy models with realistic fix times.} Papers should state hot- and cold-start behaviour, backup power and the sampling policy, and report measured current where hardware exists.
+\item \textbf{Burst-aware LPWAN design.} Capacity should be reported under timetable-shaped arrivals, not only Poisson traffic, together with a policy such as random transmission delay and a server that back-dates events.
+\item \textbf{Privacy by design.} Minimal payloads, pseudonymous identifiers, retention limits and an analysis of timing leakage are rarely discussed. Consent and purpose limits under data-protection law should be part of the system description \cite{dpdp2023,georgiadou2019location}.
+\item \textbf{Field studies with ground truth.} Longitudinal deployments, with an independent record of who was present, would show how errors behave across seasons, buildings and phone models.
+\item \textbf{Second factors without biometrics.} Because face recognition raises privacy and bias concerns \cite{almeida2021ethics,pea2022four}, designs that combine a geofence with a cheap, non-biometric factor deserve a fair comparison with those that do not.
+\item \textbf{Adopt and test a reporting standard.} Our comparison group shows that thin reporting is common across modalities. The checklist in Section~\ref{sec:checklist} is a first draft; venues, reviewers and authors need to try it, cut what does not help, and add trial size and ground truth.
+\item \textbf{Design for the person.} Study appeal and override routes, equal alternatives for people who decline or cannot use a phone, and the legal limits on tracking minors (Table~\ref{tab:human}). Nothing in the audited papers measures how these affect the people involved.
+\end{enumerate}
+
+%--------------------------------------------------------------------
+\section{Conclusions}
+Geofence-based attendance is easy to build and thinly evaluated, as are attendance systems in general. In the full texts we coded, few measure the geofence decision, fewer analyse what happens when the location fix is wrong, and almost none tests a location attack, reports energy or discusses privacy. LoRa attendance work uses cards and tags, and LoRa geofencing work serves livestock and remote communities, not people in a lecture hall. A short companion simulation shows that the gaps are not cosmetic: a plain radius test produces many false events on real tracks, and a LoRa gateway loses capacity at class changes. Attendance systems also track people, yet no audited abstract mentions consent, and few analyse an attack on the location factor. The checklist in Section~\ref{sec:checklist} gives authors and reviewers a short list of what to report, and the agenda above is mostly about measuring things that are already easy to build.
+
+\section*{Declarations}
+\noindent\textbf{Data and code availability.} The queries with their hit counts, the OpenAlex responses, the Scopus, Web of Science and IEEE Xplore exports without their abstract and keyword columns, screening scripts, coding rules, codes, generated tables and the companion simulator's code and result files are in the repository \todo{URL and DOI to be added by the authors}. Full texts were read from open-access copies and are not redistributed. Publishers' abstracts are not redistributed either; the scripts fetch them again, and a re-run returns newer data, so counts will differ from the published run. The audit data are derived from titles, abstracts and metadata of the cited records.
+
+\noindent\textbf{Declaration of generative AI and AI-assisted technologies.} \todo{Authors to confirm and edit; every statement below must be true of what you did.} An AI assistant (Claude, Anthropic; model names and versions as listed in Section~\ref{sec:ai}) was used to write the search, screening and analysis scripts, to apply the coding rules as first coder and as blind second coder on a sample, to draft the text and to format the manuscript, as described in Section~\ref{sec:ai}. The authors confirm \todo{only after checking} the originality and accuracy of the content, including the accuracy of the references, have checked the terms of use of the tool, and take full responsibility for the whole content. The original and revised versions of the text and the prompts are kept and will be given to the editor on request.
+
+\noindent\textbf{CRediT authorship contribution statement.} Dhanisha S: \todo{roles}. Lakshmi Harika P: Supervision, Validation (checked every full-text code against the papers). Adesh Kanna P: Conceptualization, Investigation, Project administration, Resources. Ananyaa S: \todo{roles}. The generative AI assistant described above did the work listed in the AI declaration; it is not an author and holds no CRediT role.
+
+\noindent\textbf{Declaration of competing interest.} The authors declare no conflicts of interest.
+
+\noindent\textbf{Funding.} No funding was provided for this study.
+
+%--------------------------------------------------------------------
+\appendix
+\section{Search queries}\label{app:queries}
+\input{gen/tab_queries.tex}
+
+\section{Audited geofence attendance systems}\label{app:audit}
+\input{gen/tab_appendix.tex}
+
+\bibliographystyle{elsarticle-num}
+\bibliography{refs_survey,refs_paper}
+\end{document}

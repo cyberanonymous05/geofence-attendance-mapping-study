@@ -1,0 +1,47 @@
+{
+ "arxiv": {
+  "retrieved": 49,
+  "in_openalex": 12,
+  "new": 37,
+  "queries": 6
+ },
+ "crossref": {
+  "retrieved": 2400,
+  "in_openalex": 551,
+  "new": 1506,
+  "queries": 18
+ },
+ "ieee": {
+  "retrieved": 103,
+  "in_openalex": 62,
+  "new": 37,
+  "queries": 5
+ },
+ "semanticscholar": {
+  "retrieved": 100,
+  "in_openalex": 87,
+  "new": 8,
+  "queries": 1
+ },
+ "scopus": {
+  "retrieved": 4784,
+  "in_openalex": 467,
+  "new": 4114,
+  "queries": 8
+ },
+ "wos": {
+  "retrieved": 1073,
+  "in_openalex": 51,
+  "new": 191,
+  "queries": 6
+ },
+ "openalex": {
+  "retrieved": 5047,
+  "unique": 3915
+ },
+ "union": {
+  "unique": 9808,
+  "new_from_other_sources": 5893,
+  "abstracts_filled_from_openalex": 730
+ }
+}

@@ -1,0 +1,92 @@
+           config  fixes_per_day  spurious_per_day  spurious_ci  missed_per_day  delay_mean_s  delay_ci  delay_max_s  events_per_day  battery_days
+0   plain+fixed5s       17280.00             37.49     4.157461            0.00      0.505356  0.117493    18.000000           47.00      1.849379
+1  plain+adaptive        2046.09             37.62     4.082897            0.00      0.681776  0.141072    30.061672           47.14     15.464918
+2    hyst+fixed5s       17280.00              0.34     0.112196            0.00     28.750259  2.011854   425.000000            9.77      1.849598
+3   hyst+fixed30s        2880.00              0.14     0.068352            0.00     53.158905  2.459829   460.000000            9.77     11.030467
+4   hyst+fixed60s        1440.00              0.03     0.033604            0.02    100.559033  2.729862   490.000000            9.75     21.901986
+5  hyst+fixed300s         288.00              0.00     0.000000            0.10    458.563230  6.966375   970.000000            9.65    103.543376
+6   hyst+adaptive        2047.43              0.30     0.102358            0.00     29.518199  2.099496   429.045159            9.77     15.470254
+       policy    fixes        life   life_raw
+0    fixed 1s  86400.0    0.740402   0.651109
+1    fixed 2s  43200.0    0.740402   0.692895
+2    fixed 5s  17280.0    1.849738   1.731157
+3   fixed 10s   8640.0    3.695257   3.458722
+4   fixed 30s   2880.0   11.035436  10.333277
+5   fixed 60s   1440.0   21.921569  20.539212
+6  fixed 300s    288.0  103.980657  97.871567
+   sf   toa_ms  students_per_gateway_pdr95  duty_cycle_pct_per_node
+0   7   41.216                        1602                 0.001611
+1   8   72.192                         910                 0.002822
+2   9  144.384                         461                 0.005643
+3  10  288.768                         233                 0.011287
+4  11  577.536                         115                 0.022573
+5  12  991.232                          68                 0.038743
+                                scheme  coord_tx  bytes_day
+0            raw streaming (every fix)   2047.43   32758.88
+1  proposed (state events + heartbeat)      0.00     337.70
+             test    k  d_true_m  detect_rate  false_alarm  window_h
+0      rssi_spoof  1.5     400.0      0.66245     0.135200       NaN
+1      rssi_spoof  1.5     600.0      0.84420     0.135200       NaN
+2      rssi_spoof  1.5    1000.0      0.96775     0.135200       NaN
+3      rssi_spoof  1.5    1500.0      0.99570     0.135200       NaN
+4      rssi_spoof  1.5    2500.0      1.00000     0.135200       NaN
+5      rssi_spoof  2.0     400.0      0.54065     0.043650       NaN
+6      rssi_spoof  2.0     600.0      0.73860     0.043650       NaN
+7      rssi_spoof  2.0    1000.0      0.92615     0.043650       NaN
+8      rssi_spoof  2.0    1500.0      0.98240     0.043650       NaN
+9      rssi_spoof  2.0    2500.0      0.99910     0.043650       NaN
+10     rssi_spoof  2.5     400.0      0.42640     0.012250       NaN
+11     rssi_spoof  2.5     600.0      0.62020     0.012250       NaN
+12     rssi_spoof  2.5    1000.0      0.85660     0.012250       NaN
+13     rssi_spoof  2.5    1500.0      0.95865     0.012250       NaN
+14     rssi_spoof  2.5    2500.0      0.99640     0.012250       NaN
+15     rssi_spoof  3.0     400.0      0.33620     0.002700       NaN
+16     rssi_spoof  3.0     600.0      0.50850     0.002700       NaN
+17     rssi_spoof  3.0    1000.0      0.75460     0.002700       NaN
+18     rssi_spoof  3.0    1500.0      0.91045     0.002700       NaN
+19     rssi_spoof  3.0    2500.0      0.98485     0.002700       NaN
+20  static_device  NaN       NaN          NaN     0.700000       6.0
+21  static_device  NaN       NaN          NaN     0.033333      12.0
+22  static_device  NaN       NaN          NaN     0.000000      18.0
+   sigma_deg         config  spurious  missed      delay     fixes
+0        4.0  plain+fixed5s     25.10    0.00   0.069932  17280.00
+1        4.0  hyst+adaptive      0.00    0.02  30.253911   2025.96
+2        8.0  plain+fixed5s     34.22    0.00   0.798905  17280.00
+3        8.0  hyst+adaptive      0.30    0.00  28.215348   2025.90
+4       16.0  plain+fixed5s     43.60    0.00   2.516910  17280.00
+5       16.0  hyst+adaptive      1.68    0.00  25.811327   2019.70
+              scenario           config  spurious  spurious_ci  missed      delay     fixes
+0    baseline(assumed)    plain+fixed5s     34.48     5.175151     0.0   0.533790  17280.00
+1    baseline(assumed)    hyst+adaptive      0.32     0.162689     0.0  26.646355   2026.72
+2    baseline(assumed)  hyst25+adaptive      0.00     0.000000     0.0  38.943045   2029.00
+3   GeoLife-calibrated    plain+fixed5s     24.18     3.888147     0.0   0.627583  17280.00
+4   GeoLife-calibrated    hyst+adaptive      0.48     0.187746     0.0  26.766759   2029.16
+5   GeoLife-calibrated  hyst25+adaptive      0.04     0.054869     0.0  37.996416   2031.98
+6              tau=10s    plain+fixed5s     56.10     7.944750     0.0   0.403478  17280.00
+7              tau=10s    hyst+adaptive      0.08     0.075962     0.0  28.521367   2026.50
+8              tau=10s  hyst25+adaptive      0.00     0.000000     0.0  40.203337   2028.96
+9             tau=150s    plain+fixed5s     17.72     2.707784     0.0   0.570440  17280.00
+10            tau=150s    hyst+adaptive      0.38     0.176111     0.0  27.624137   2026.46
+11            tau=150s  hyst25+adaptive      0.02     0.039200     0.0  38.684494   2029.10
+12       outlier p=0.0    plain+fixed5s     32.72     5.082764     0.0   0.533790  17280.00
+13       outlier p=0.0    hyst+adaptive      0.34     0.164320     0.0  27.075697   2026.58
+14       outlier p=0.0  hyst25+adaptive      0.02     0.039200     0.0  37.839750   2029.08
+15      outlier p=0.02    plain+fixed5s     39.18     5.579154     0.0   0.591110  17280.00
+16      outlier p=0.02    hyst+adaptive      0.38     0.166970     0.0  28.079686   2025.12
+17      outlier p=0.02  hyst25+adaptive      0.00     0.000000     0.0  39.901911   2028.16
+18       sigma_open=4m    plain+fixed5s     34.48     5.175151     0.0   0.533790  17280.00
+19       sigma_open=4m    hyst+adaptive      0.34     0.164320     0.0  27.433761   2027.60
+20       sigma_open=4m  hyst25+adaptive      0.00     0.000000     0.0  38.623688   2030.12
+21       sigma_open=8m    plain+fixed5s     34.48     5.175151     0.0   0.533790  17280.00
+22       sigma_open=8m    hyst+adaptive      0.36     0.165745     0.0  26.925419   2031.98
+23       sigma_open=8m  hyst25+adaptive      0.00     0.000000     0.0  39.625488   2035.52
+   pathloss_exp  shadow_sigma  detect_1000m  detect_400m  false_alarm
+0           2.4           4.0       0.97755      0.62970      0.04710
+1           2.4           6.0       0.84690      0.46660      0.04700
+2           2.4           8.0       0.67620      0.34755      0.04480
+3           2.9           4.0       0.99520      0.70605      0.04255
+4           2.9           6.0       0.92540      0.53845      0.04650
+5           2.9           8.0       0.79185      0.42215      0.04715
+6           3.4           4.0       0.99910      0.76675      0.04650
+7           3.4           6.0       0.96840      0.61010      0.04685
+8           3.4           8.0       0.87370      0.48200      0.04430

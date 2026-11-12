@@ -1,0 +1,326 @@
+{
+ "queries": 53,
+ "records_retrieved": 5047,
+ "unique_records": 3915,
+ "with_abstract": 3677,
+ "per_query": {
+  "q01": {
+   "total_hits": 528,
+   "retrieved": 100,
+   "theme": "geofence-attendance",
+   "query": "geofencing attendance"
+  },
+  "q01_p2": {
+   "total_hits": 528,
+   "retrieved": 100,
+   "theme": "geofence-attendance-deep",
+   "query": "geofencing attendance"
+  },
+  "q01_p3": {
+   "total_hits": 528,
+   "retrieved": 100,
+   "theme": "geofence-attendance-deep",
+   "query": "geofencing attendance"
+  },
+  "q01_p4": {
+   "total_hits": 528,
+   "retrieved": 100,
+   "theme": "geofence-attendance-deep",
+   "query": "geofencing attendance"
+  },
+  "q01_p5": {
+   "total_hits": 528,
+   "retrieved": 100,
+   "theme": "geofence-attendance-deep",
+   "query": "geofencing attendance"
+  },
+  "q02": {
+   "total_hits": 117,
+   "retrieved": 100,
+   "theme": "geofence-attendance",
+   "query": "geofence \"attendance system\""
+  },
+  "q02_p2": {
+   "total_hits": 117,
+   "retrieved": 17,
+   "theme": "geofence-attendance-deep",
+   "query": "geofence \"attendance system\""
+  },
+  "q03": {
+   "total_hits": 1502,
+   "retrieved": 100,
+   "theme": "gps-attendance",
+   "query": "GPS \"attendance system\""
+  },
+  "q03_p2": {
+   "total_hits": 1502,
+   "retrieved": 100,
+   "theme": "geofence-attendance-deep",
+   "query": "GPS \"attendance system\""
+  },
+  "q03_p3": {
+   "total_hits": 1502,
+   "retrieved": 100,
+   "theme": "geofence-attendance-deep",
+   "query": "GPS \"attendance system\""
+  },
+  "q04": {
+   "total_hits": 1702,
+   "retrieved": 100,
+   "theme": "lora-attendance",
+   "query": "LoRa attendance"
+  },
+  "q05": {
+   "total_hits": 5899,
+   "retrieved": 100,
+   "theme": "lora-tracking",
+   "query": "LoRa GPS tracking"
+  },
+  "q06": {
+   "total_hits": 604,
+   "retrieved": 100,
+   "theme": "lora-tracking",
+   "query": "LoRaWAN \"asset tracking\""
+  },
+  "q07": {
+   "total_hits": 1125,
+   "retrieved": 100,
+   "theme": "geofence-core",
+   "query": "geofencing \"location-based\" service"
+  },
+  "q08": {
+   "total_hits": 362,
+   "retrieved": 100,
+   "theme": "geofence-core",
+   "query": "geofence boundary detection GPS error"
+  },
+  "q09": {
+   "total_hits": 8,
+   "retrieved": 8,
+   "theme": "geofence-core",
+   "query": "geofence \"false\" alarms hysteresis"
+  },
+  "q10": {
+   "total_hits": 3459,
+   "retrieved": 100,
+   "theme": "attendance-other",
+   "query": "RFID \"attendance system\""
+  },
+  "q11": {
+   "total_hits": 1854,
+   "retrieved": 100,
+   "theme": "attendance-other",
+   "query": "Bluetooth \"attendance\" smartphone"
+  },
+  "q12": {
+   "total_hits": 479,
+   "retrieved": 100,
+   "theme": "attendance-other",
+   "query": "WiFi \"attendance\" localization"
+  },
+  "q13": {
+   "total_hits": 6084,
+   "retrieved": 100,
+   "theme": "attendance-other",
+   "query": "face recognition \"attendance system\""
+  },
+  "q14": {
+   "total_hits": 1235,
+   "retrieved": 100,
+   "theme": "attendance-other",
+   "query": "IoT \"smart attendance\""
+  },
+  "q15": {
+   "total_hits": 1807,
+   "retrieved": 100,
+   "theme": "lora-scaling",
+   "query": "LoRaWAN scalability collisions capacity"
+  },
+  "q16": {
+   "total_hits": 6822,
+   "retrieved": 100,
+   "theme": "lora-scaling",
+   "query": "LoRa spreading factor capture effect"
+  },
+  "q17": {
+   "total_hits": 342,
+   "retrieved": 100,
+   "theme": "lora-scaling",
+   "query": "LoRaWAN \"ALOHA\" uplink \"packet delivery\""
+  },
+  "q18": {
+   "total_hits": 33276,
+   "retrieved": 100,
+   "theme": "gps-energy",
+   "query": "adaptive GPS sampling energy mobile"
+  },
+  "q19": {
+   "total_hits": 2891,
+   "retrieved": 100,
+   "theme": "gps-energy",
+   "query": "duty cycling GPS energy-efficient localization"
+  },
+  "q20": {
+   "total_hits": 1401,
+   "retrieved": 100,
+   "theme": "gps-accuracy",
+   "query": "smartphone GPS accuracy urban canyon"
+  },
+  "q21": {
+   "total_hits": 82717,
+   "retrieved": 100,
+   "theme": "privacy",
+   "query": "location privacy tracking students"
+  },
+  "q22": {
+   "total_hits": 7856,
+   "retrieved": 100,
+   "theme": "privacy",
+   "query": "attendance monitoring privacy surveillance university"
+  },
+  "q23": {
+   "total_hits": 3964,
+   "retrieved": 100,
+   "theme": "security",
+   "query": "LoRaWAN security vulnerabilities"
+  },
+  "q24": {
+   "total_hits": 8733,
+   "retrieved": 100,
+   "theme": "security",
+   "query": "GPS spoofing detection"
+  },
+  "q25": {
+   "total_hits": 60,
+   "retrieved": 60,
+   "theme": "presence-detection",
+   "query": "presence detection geofence smartphone indoor outdoor"
+  },
+  "q26": {
+   "total_hits": 1590,
+   "retrieved": 100,
+   "theme": "campus-sensing",
+   "query": "campus mobility smartphone sensing students dataset"
+  },
+  "q27": {
+   "total_hits": 4639,
+   "retrieved": 100,
+   "theme": "indoor-position",
+   "query": "indoor localization WiFi fingerprint survey"
+  },
+  "q28": {
+   "total_hits": 13662,
+   "retrieved": 100,
+   "theme": "tracking-lora-sota",
+   "query": "LoRa localization survey"
+  },
+  "q29": {
+   "total_hits": 281827,
+   "retrieved": 100,
+   "theme": "prior-surveys",
+   "query": "attendance system survey review"
+  },
+  "q30": {
+   "total_hits": 38310,
+   "retrieved": 100,
+   "theme": "prior-surveys",
+   "query": "automated attendance management systems review"
+  },
+  "q31": {
+   "total_hits": 2943,
+   "retrieved": 100,
+   "theme": "prior-surveys",
+   "query": "geofencing survey"
+  },
+  "q32": {
+   "total_hits": 1507,
+   "retrieved": 100,
+   "theme": "prior-surveys",
+   "query": "LPWAN survey LoRa NB-IoT Sigfox"
+  },
+  "q33": {
+   "total_hits": 8476,
+   "retrieved": 100,
+   "theme": "prior-surveys",
+   "query": "LoRaWAN survey review"
+  },
+  "q34": {
+   "total_hits": 398694,
+   "retrieved": 100,
+   "theme": "attendance-other",
+   "query": "NFC OR QR attendance system university"
+  },
+  "q35": {
+   "total_hits": 26027,
+   "retrieved": 100,
+   "theme": "attendance-other",
+   "query": "deep learning face recognition attendance classroom"
+  },
+  "q36": {
+   "total_hits": 170,
+   "retrieved": 100,
+   "theme": "attendance-other",
+   "query": "BLE beacon attendance classroom"
+  },
+  "q37": {
+   "total_hits": 5151,
+   "retrieved": 100,
+   "theme": "attendance-other",
+   "query": "fingerprint biometric attendance system"
+  },
+  "q38": {
+   "total_hits": 17214,
+   "retrieved": 100,
+   "theme": "presence-detection",
+   "query": "occupancy detection building sensing survey"
+  },
+  "q39": {
+   "total_hits": 9846,
+   "retrieved": 100,
+   "theme": "gps-energy",
+   "query": "GPS energy consumption smartphone location sensing"
+  },
+  "q40": {
+   "total_hits": 561,
+   "retrieved": 100,
+   "theme": "geofence-core",
+   "query": "geofence monitoring energy-efficient mobile"
+  },
+  "q41": {
+   "total_hits": 262,
+   "retrieved": 100,
+   "theme": "geofence-attendance-deep",
+   "query": "geo-fencing attendance mobile application"
+  },
+  "q41_p2": {
+   "total_hits": 262,
+   "retrieved": 100,
+   "theme": "geofence-attendance-deep",
+   "query": "geo-fencing attendance mobile application"
+  },
+  "q41_p3": {
+   "total_hits": 262,
+   "retrieved": 62,
+   "theme": "geofence-attendance-deep",
+   "query": "geo-fencing attendance mobile application"
+  },
+  "q42": {
+   "total_hits": 2655,
+   "retrieved": 100,
+   "theme": "geofence-attendance-deep",
+   "query": "location-based attendance smartphone GPS"
+  },
+  "q42_p2": {
+   "total_hits": 2655,
+   "retrieved": 100,
+   "theme": "geofence-attendance-deep",
+   "query": "location-based attendance smartphone GPS"
+  },
+  "q42_p3": {
+   "total_hits": 2656,
+   "retrieved": 100,
+   "theme": "geofence-attendance-deep",
+   "query": "location-based attendance smartphone GPS"
+  }
+ }
+}

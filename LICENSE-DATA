@@ -1,0 +1,12 @@
+Data, tables, codes and text in this repository (everything except source code)
+are licensed under the Creative Commons Attribution 4.0 International licence (CC BY 4.0).
+
+Copyright (c) 2026 Dhanisha Sethupathy, Lakshmi Harika Palivela, Adesh Kanna Prakash, Ananyaa Subramanian
+
+Licence deed:  https://creativecommons.org/licenses/by/4.0/
+Legal code:    https://creativecommons.org/licenses/by/4.0/legalcode
+
+Source code (*.py, Makefile) is licensed separately under the MIT License, see LICENSE-CODE.
+The OpenAlex responses under survey/search/raw/ are CC0 as published by OpenAlex.
+Third-party data (GeoLife, StudentLife, publishers' abstracts, database exports) are not covered by these licences;
+see the notes below in README.md.

@@ -1,0 +1,13 @@
+disc_radius_m,channels,model,students_per_gateway
+300.0,1,no capture,1582
+300.0,1,capture 6 dB,2253
+300.0,3,no capture,4674
+300.0,3,capture 6 dB,6762
+300.0,8,no capture,12722
+300.0,8,capture 6 dB,18325
+1000.0,1,no capture,1635
+1000.0,1,capture 6 dB,2315
+1000.0,3,no capture,4933
+1000.0,3,capture 6 dB,7016
+1000.0,8,no capture,13337
+1000.0,8,capture 6 dB,18980

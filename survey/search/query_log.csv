@@ -1,0 +1,41 @@
+qid,theme,query,run_date,total_hits,retrieved
+q01,geofence-attendance,geofencing attendance,2026-11-04,528,100
+q02,geofence-attendance,"geofence ""attendance system""",2026-11-04,117,100
+q03,gps-attendance,"GPS ""attendance system""",2026-11-04,1502,100
+q04,lora-attendance,LoRa attendance,2026-11-04,1702,100
+q05,lora-tracking,LoRa GPS tracking,2026-11-04,5899,100
+q06,lora-tracking,"LoRaWAN ""asset tracking""",2026-11-04,604,100
+q07,geofence-core,"geofencing ""location-based"" service",2026-11-04,1125,100
+q08,geofence-core,geofence boundary detection GPS error,2026-11-04,362,100
+q09,geofence-core,"geofence ""false"" alarms hysteresis",2026-11-04,8,8
+q10,attendance-other,"RFID ""attendance system""",2026-11-04,3459,100
+q11,attendance-other,"Bluetooth ""attendance"" smartphone",2026-11-04,1854,100
+q12,attendance-other,"WiFi ""attendance"" localization",2026-11-04,479,100
+q13,attendance-other,"face recognition ""attendance system""",2026-11-04,6084,100
+q14,attendance-other,"IoT ""smart attendance""",2026-11-04,1235,100
+q15,lora-scaling,LoRaWAN scalability collisions capacity,2026-11-04,1807,100
+q16,lora-scaling,LoRa spreading factor capture effect,2026-11-04,6822,100
+q17,lora-scaling,"LoRaWAN ""ALOHA"" uplink ""packet delivery""",2026-11-04,342,100
+q18,gps-energy,adaptive GPS sampling energy mobile,2026-11-04,33276,100
+q19,gps-energy,duty cycling GPS energy-efficient localization,2026-11-04,2891,100
+q20,gps-accuracy,smartphone GPS accuracy urban canyon,2026-11-04,1401,100
+q21,privacy,location privacy tracking students,2026-11-04,82717,100
+q22,privacy,attendance monitoring privacy surveillance university,2026-11-04,7856,100
+q23,security,LoRaWAN security vulnerabilities,2026-11-04,3964,100
+q24,security,GPS spoofing detection,2026-11-04,8733,100
+q25,presence-detection,presence detection geofence smartphone indoor outdoor,2026-11-04,60,60
+q26,campus-sensing,campus mobility smartphone sensing students dataset,2026-11-04,1590,100
+q27,indoor-position,indoor localization WiFi fingerprint survey,2026-11-04,4639,100
+q28,tracking-lora-sota,LoRa localization survey,2026-11-04,13662,100
+q29,prior-surveys,attendance system survey review,2026-11-04,281827,100
+q30,prior-surveys,automated attendance management systems review,2026-11-04,38310,100
+q31,prior-surveys,geofencing survey,2026-11-04,2943,100
+q32,prior-surveys,LPWAN survey LoRa NB-IoT Sigfox,2026-11-04,1507,100
+q33,prior-surveys,LoRaWAN survey review,2026-11-04,8476,100
+q34,attendance-other,NFC OR QR attendance system university,2026-11-04,398694,100
+q35,attendance-other,deep learning face recognition attendance classroom,2026-11-04,26027,100
+q36,attendance-other,BLE beacon attendance classroom,2026-11-04,170,100
+q37,attendance-other,fingerprint biometric attendance system,2026-11-04,5151,100
+q38,presence-detection,occupancy detection building sensing survey,2026-11-04,17214,100
+q39,gps-energy,GPS energy consumption smartphone location sensing,2026-11-04,9846,100
+q40,geofence-core,geofence monitoring energy-efficient mobile,2026-11-04,561,100

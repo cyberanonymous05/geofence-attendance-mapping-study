@@ -1,0 +1,11 @@
+\begin{table}[tbp]\centering\footnotesize
+\caption{Proposed minimum reporting checklist for presence-sensing papers, with the number of the \ftN{} full-text-coded geofence attendance papers (Creative Commons licence) that meet each item. Items R1--R7 are the codebook questions of Section~\ref{sec:fulltext}; no item was scored as not applicable, so counts for R4, R5 and R7 are low for papers where an item arguably does not apply. The codebook definitions of R1 and R6 are looser than the wording here (``handled or analysed'', ``discussed''), so the counts for those two overstate compliance.}\label{tab:checklist}
+\begin{tabular}{@{}lL{7.4cm}L{2.2cm}r@{}}\toprule Item & Report & Applies to & Met \\ \midrule
+R1 & Position error of the sensing method under the test conditions (for example median and 95th percentile), and how the decision rule copes with it. & Location-based & 2 of \ftN{} \\
+R2 & Error of the presence decision itself against ground truth: false entries, false exits, missed events, delay. & All modalities & 3 of \ftN{} \\
+R3 & At least one attack on the presence factor (mock location, forwarded or relayed token, photo or replay, shared device) and its outcome. & All modalities & 2 of \ftN{} \\
+R4 & When and how often the person or tag is sampled, and what triggers a sample. & Location-based & 0 of \ftN{} \\
+R5 & Energy per day or battery life, measured or modelled with the fix or read time stated. & Battery-powered & 0 of \ftN{} \\
+R6 & Personal data collected, retention period, legal basis or consent route, and who can read the log. & All modalities & 0 of \ftN{} \\
+R7 & Fence shape and size, thresholds, dwell or confirmation rule, and the values used in the test. & Geofence & 5 of \ftN{} \\
+\bottomrule\end{tabular}\end{table}

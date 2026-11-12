@@ -1,0 +1,35 @@
+{
+ "title": "Data and code for: Presence sensing with GPS geofences and LPWAN for automatic attendance: a mapping study, an evidence audit and a research agenda",
+ "upload_type": "dataset",
+ "description": "Search logs, screening and coding data, generated tables and scripts for a mapping study of GPS-geofence and LPWAN attendance sensing. See README_RELEASE.md.",
+ "creators": [
+  {
+   "name": "Sethupathy, Dhanisha",
+   "affiliation": "Vellore Institute of Technology, Chennai, India"
+  },
+  {
+   "name": "Palivela, Lakshmi Harika",
+   "affiliation": "Vellore Institute of Technology, Chennai, India"
+  },
+  {
+   "name": "Prakash, Adesh Kanna",
+   "affiliation": "Vellore Institute of Technology, Chennai, India"
+  },
+  {
+   "name": "Subramanian, Ananyaa",
+   "affiliation": "Vellore Institute of Technology, Chennai, India"
+  }
+ ],
+ "access_right": "open",
+ "license": "cc-by-4.0",
+ "language": "eng",
+ "keywords": [
+  "attendance",
+  "geofencing",
+  "GPS",
+  "LoRa",
+  "LPWAN",
+  "systematic mapping study",
+  "reproducibility"
+ ]
+}

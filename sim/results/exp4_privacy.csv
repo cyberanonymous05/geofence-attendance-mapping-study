@@ -1,0 +1,3 @@
+scheme,coord_tx,bytes_day
+raw streaming (every fix),2047.43,32758.88
+proposed (state events + heartbeat),0.0,337.69999999999993

@@ -1,0 +1,91 @@
+{\footnotesize\setlength{\tabcolsep}{3pt}\begin{longtable}{@{}llL{0.40\linewidth}rL{0.17\linewidth}@{}}
+\caption{Search queries (open sources 4 November 2026; Scopus, Web of Science and IEEE Xplore 11 November 2026). Hits are the totals the source reports for its relevance-ranked query, not the number screened (top 100 per page; Section~\ref{sec:method}); Crossref and Semantic Scholar match loosely, so their totals are very large. Double quotes in the original queries are shown as single quotes.}\label{tab:queries}\\
+\toprule ID & Source & Query & Hits & Theme \\ \midrule \endfirsthead
+\toprule ID & Source & Query & Hits & Theme \\ \midrule \endhead
+I1 & IEEE Xplore & ('All Metadata':geofenc*) AND ('All Metadata':attendance) & 27 &  \\
+I2 & IEEE Xplore & ('All Metadata':lora OR 'All Metadata':lorawan) AND ('All Metadata':attendance) & 13 &  \\
+I3 & IEEE Xplore & ('All Metadata':gps) AND ('All Metadata':'attendance system') & 43 &  \\
+I4 & IEEE Xplore & ('All Metadata':lora OR 'All Metadata':lorawan) AND ('All Metadata':geofenc*) & 19 &  \\
+I5 & IEEE Xplore & ('All Metadata':geofenc*) AND ('All Metadata':'location error' OR 'All Metadata':'gps error' OR 'All Metadata':hysteresis) & 1 &  \\
+S1 & Scopus & TITLE-ABS-KEY ( ( geofenc* OR 'geo-fenc*' ) AND ( attendance OR 'presence monitoring' OR 'presence system' ) ) AND PUBYEAR > 2004 & 38 &  \\
+S2 & Scopus & TITLE-ABS-KEY ( ( lora OR lorawan OR lpwan ) AND ( attendance OR 'roll call' ) ) AND PUBYEAR > 2004 & 20 &  \\
+S3 & Scopus & TITLE-ABS-KEY ( ( gps OR gnss ) AND 'attendance system' ) AND PUBYEAR > 2004 & 65 &  \\
+S4 & Scopus & TITLE-ABS-KEY ( ( lora OR lorawan ) AND ( geofenc* OR 'geo-fenc*' ) ) AND PUBYEAR > 2004 & 28 &  \\
+S5 & Scopus & TITLE-ABS-KEY ( geofenc* AND ( 'location error' OR 'gps error' OR 'positioning error' OR uncertainty OR hysteresis OR 'false alarm*' ) ) AND PUBYEAR > 2004 & 53 &  \\
+S6 & Scopus & TITLE ( attendance ) AND TITLE-ABS-KEY ( survey OR review OR 'systematic review' ) AND PUBYEAR > 2004 & 2{,}000 &  \\
+S7 & Scopus & TITLE-ABS-KEY ( ( rfid OR 'face recognition' OR bluetooth OR ble OR 'qr code' OR nfc OR fingerprint ) AND 'attendance system' ) AND PUBYEAR > 2017 & 1{,}233 &  \\
+S8 & Scopus & TITLE-ABS-KEY ( ( lorawan OR lora ) AND ( scalab* OR collision* OR capacity ) ) AND DOCTYPE ( ar OR re ) AND PUBYEAR > 2014 & 1{,}347 &  \\
+W1 & Web of Science & TS=((geofenc* OR 'geo-fenc*') AND (attendance OR 'presence monitoring' OR 'presence system')) AND PY=(2005-2026) & 6 &  \\
+W2 & Web of Science & TS=((lora OR lorawan OR lpwan) AND (attendance OR 'roll call')) AND PY=(2005-2026) & 7 &  \\
+W3 & Web of Science & TS=((gps OR gnss) AND 'attendance system') AND PY=(2005-2026) & 13 &  \\
+W4 & Web of Science & TS=((lora OR lorawan) AND (geofenc* OR 'geo-fenc*')) AND PY=(2005-2026) & 12 &  \\
+W5 & Web of Science & TS=(geofenc* AND ('location error' OR 'gps error' OR 'positioning error' OR uncertainty OR hysteresis OR 'false alarm*')) AND PY=(2005-2026) & 35 &  \\
+W6 & Web of Science & TI=(attendance) AND TS=(survey OR review OR 'systematic review') AND PY=(2005-2026) & 1{,}000 &  \\
+a01 & arXiv & all:geofence AND all:attendance & 0 &  \\
+a02 & arXiv & all:geofencing AND all:LoRa & 0 &  \\
+a03 & arXiv & all:attendance AND all:LoRa & 16 &  \\
+a04 & arXiv & all:geofence AND all:GPS AND all:accuracy & 0 &  \\
+a05 & arXiv & all:attendance AND all:smartphone AND all:GPS & 0 &  \\
+a06 & arXiv & all:LoRaWAN AND all:scalability & 33 &  \\
+c01 & Crossref & geofencing attendance & 16{,}259 &  \\
+c02 & Crossref & geofence attendance system mobile application & 4{,}252{,}652 &  \\
+c03 & Crossref & GPS based attendance system & 8{,}235{,}317 &  \\
+c04 & Crossref & LoRa attendance system & 2{,}696{,}616 &  \\
+c05 & Crossref & LoRa GPS tracking geofence & 274{,}354 &  \\
+c06 & Crossref & LoRaWAN geofencing & 3{,}280 &  \\
+c07 & Crossref & attendance system review survey & 7{,}475{,}915 &  \\
+c08 & Crossref & RFID attendance system & 2{,}711{,}579 &  \\
+c09 & Crossref & BLE beacon attendance & 23{,}867 &  \\
+c10 & Crossref & face recognition attendance system & 3{,}275{,}479 &  \\
+c11 & Crossref & QR code attendance system & 2{,}818{,}832 &  \\
+c12 & Crossref & geofence location error false alarm & 315{,}910 &  \\
+c13 & Crossref & adaptive GPS sampling energy geofence & 2{,}634{,}692 &  \\
+c14 & Crossref & LoRaWAN scalability collisions capacity & 290{,}941 &  \\
+c15 & Crossref & location privacy attendance students & 1{,}207{,}587 &  \\
+c16 & Crossref & geofencing survey review & 4{,}870{,}502 &  \\
+c17 & Crossref & LPWAN survey review & 4{,}870{,}718 &  \\
+c18 & Crossref & smart campus attendance IoT LoRa & 793{,}160 &  \\
+q01 & OpenAlex & geofencing attendance & 528 & geofence-attendance \\
+q02 & OpenAlex & geofence 'attendance system' & 117 & geofence-attendance \\
+q03 & OpenAlex & GPS 'attendance system' & 1{,}502 & gps-attendance \\
+q04 & OpenAlex & LoRa attendance & 1{,}702 & lora-attendance \\
+q05 & OpenAlex & LoRa GPS tracking & 5{,}899 & lora-tracking \\
+q06 & OpenAlex & LoRaWAN 'asset tracking' & 604 & lora-tracking \\
+q07 & OpenAlex & geofencing 'location-based' service & 1{,}125 & geofence-core \\
+q08 & OpenAlex & geofence boundary detection GPS error & 362 & geofence-core \\
+q09 & OpenAlex & geofence 'false' alarms hysteresis & 8 & geofence-core \\
+q10 & OpenAlex & RFID 'attendance system' & 3{,}459 & attendance-other \\
+q11 & OpenAlex & Bluetooth 'attendance' smartphone & 1{,}854 & attendance-other \\
+q12 & OpenAlex & WiFi 'attendance' localization & 479 & attendance-other \\
+q13 & OpenAlex & face recognition 'attendance system' & 6{,}084 & attendance-other \\
+q14 & OpenAlex & IoT 'smart attendance' & 1{,}235 & attendance-other \\
+q15 & OpenAlex & LoRaWAN scalability collisions capacity & 1{,}807 & lora-scaling \\
+q16 & OpenAlex & LoRa spreading factor capture effect & 6{,}822 & lora-scaling \\
+q17 & OpenAlex & LoRaWAN 'ALOHA' uplink 'packet delivery' & 342 & lora-scaling \\
+q18 & OpenAlex & adaptive GPS sampling energy mobile & 33{,}276 & gps-energy \\
+q19 & OpenAlex & duty cycling GPS energy-efficient localization & 2{,}891 & gps-energy \\
+q20 & OpenAlex & smartphone GPS accuracy urban canyon & 1{,}401 & gps-accuracy \\
+q21 & OpenAlex & location privacy tracking students & 82{,}717 & privacy \\
+q22 & OpenAlex & attendance monitoring privacy surveillance university & 7{,}856 & privacy \\
+q23 & OpenAlex & LoRaWAN security vulnerabilities & 3{,}964 & security \\
+q24 & OpenAlex & GPS spoofing detection & 8{,}733 & security \\
+q25 & OpenAlex & presence detection geofence smartphone indoor outdoor & 60 & presence-detection \\
+q26 & OpenAlex & campus mobility smartphone sensing students dataset & 1{,}590 & campus-sensing \\
+q27 & OpenAlex & indoor localization WiFi fingerprint survey & 4{,}639 & indoor-position \\
+q28 & OpenAlex & LoRa localization survey & 13{,}662 & tracking-lora-sota \\
+q29 & OpenAlex & attendance system survey review & 281{,}827 & prior-surveys \\
+q30 & OpenAlex & automated attendance management systems review & 38{,}310 & prior-surveys \\
+q31 & OpenAlex & geofencing survey & 2{,}943 & prior-surveys \\
+q32 & OpenAlex & LPWAN survey LoRa NB-IoT Sigfox & 1{,}507 & prior-surveys \\
+q33 & OpenAlex & LoRaWAN survey review & 8{,}476 & prior-surveys \\
+q34 & OpenAlex & NFC OR QR attendance system university & 398{,}694 & attendance-other \\
+q35 & OpenAlex & deep learning face recognition attendance classroom & 26{,}027 & attendance-other \\
+q36 & OpenAlex & BLE beacon attendance classroom & 170 & attendance-other \\
+q37 & OpenAlex & fingerprint biometric attendance system & 5{,}151 & attendance-other \\
+q38 & OpenAlex & occupancy detection building sensing survey & 17{,}214 & presence-detection \\
+q39 & OpenAlex & GPS energy consumption smartphone location sensing & 9{,}846 & gps-energy \\
+q40 & OpenAlex & geofence monitoring energy-efficient mobile & 561 & geofence-core \\
+q41 & OpenAlex & geo-fencing attendance mobile application & 262 & geofence-attendance-deep \\
+q42 & OpenAlex & location-based attendance smartphone GPS & 2{,}655 & geofence-attendance-deep \\
+s01 & Semantic Scholar & geofencing attendance & 121{,}545 &  \\
+\bottomrule\end{longtable}}

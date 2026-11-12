@@ -1,0 +1,18 @@
+\begin{table}[tbp]\centering\small
+\caption{Abstract-level audit of \nAudit{} geofence-based attendance and presence systems (counts overlap). Coding rules are in Section~\ref{sec:method}.}\label{tab:audit}
+\begin{tabular}{@{}L{0.70\linewidth}rr@{}}\toprule
+Property found in the abstract & Systems & Share \\ \midrule
+Adds a second factor (face, biometric, QR, RFID/NFC/BLE, device ID) & 45 & 75\% \\
+\quad face recognition or liveness & 28 & 47\% \\
+\quad fingerprint, voice, iris or generic biometric & 21 & 35\% \\
+\quad QR code & 14 & 23\% \\
+\quad RFID, NFC or BLE & 8 & 13\% \\
+Mentions proxy attendance, fraud or spoofing & 28 & 47\% \\
+Boundary stated as circle (Haversine or radius) & 14 & 23\% \\
+Boundary stated as polygon or box & 4 & 7\% \\
+Reports any number (accuracy, latency, usability, sample size) & 23 & 38\% \\
+\quad of which measures the geofence decision or position error & 6 & 10\% \\
+States that location error or uncertainty is handled & 4 & 7\% \\
+Mentions privacy or data protection & 3 & 5\% \\
+Uses LoRa or another LPWAN & 0 & 0\% \\
+\bottomrule\end{tabular}\end{table}

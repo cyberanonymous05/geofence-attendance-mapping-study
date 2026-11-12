@@ -1,0 +1,12 @@
+{
+ "n_tracks_scanned": 3000,
+ "n_stationary_windows": 195,
+ "sigma_per_axis_median": 5.2840349374544635,
+ "sigma_p25": 2.526602548419295,
+ "sigma_p75": 6.666843721872615,
+ "sigma_p95": 8.403197267284398,
+ "autocorr_lag10_median": 0.8813245634426229,
+ "autocorr_lag30_median": 0.5282617646536283,
+ "frac_fixes_beyond_3sigma_median": 0.11333333333333333,
+ "tau_s_from_lag10": 79.15818911193459
+}
