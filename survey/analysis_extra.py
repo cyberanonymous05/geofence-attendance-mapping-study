@@ -8,6 +8,8 @@ import csv, json, re, statistics as st
 from pathlib import Path
 S = Path(__file__).parent; G = S / "gen"
 stage1 = list(csv.DictReader(open(S / "screening/stage1.csv")))
+if not any(r["abstract"] for r in stage1):   # the public deposit has no abstract text; refuse to overwrite gen/ with wrong values
+    raise SystemExit("No abstract text here: publishers' abstracts are not redistributed. Fetch them again with `make search corpus` (newer data, so counts will differ), or use the tables in gen/ as published.")
 audit = list(csv.DictReader(open(S / "screening/audit.csv")))
 meta = json.load(open(S / "screening/meta_cache.json"))
 ver = {r["id"]: r for r in csv.DictReader(open(S / "screening/verification_log.csv"))}

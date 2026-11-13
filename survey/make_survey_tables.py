@@ -9,6 +9,8 @@ import matplotlib.pyplot as plt
 S = Path(__file__).parent; G = S / "gen"; G.mkdir(exist_ok=True)
 prisma = json.load(open(S / "search/prisma_counts.json"))
 stage1 = list(csv.DictReader(open(S / "screening/stage1.csv")))
+if not any(r["abstract"] for r in stage1):   # the public deposit has no abstract text; refuse to overwrite gen/ with wrong values
+    raise SystemExit("No abstract text here: publishers' abstracts are not redistributed. Fetch them again with `make search corpus` (newer data, so counts will differ), or use the tables in gen/ as published.")
 inc = list(csv.DictReader(open(S / "screening/included.csv")))
 ver = {r["id"]: r for r in csv.DictReader(open(S / "screening/verification_log.csv"))}
 audit = list(csv.DictReader(open(S / "screening/audit.csv")))

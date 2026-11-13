@@ -1,7 +1,7 @@
 {
  "title": "Data and code for: Presence sensing with GPS geofences and LPWAN for automatic attendance: a mapping study, an evidence audit and a research agenda",
  "upload_type": "dataset",
- "description": "Search logs, screening and coding data, generated tables and scripts for a mapping study of GPS-geofence and LPWAN attendance sensing. See README_RELEASE.md.",
+ "description": "Search logs, screening and coding data, generated tables and scripts for a mapping study of GPS-geofence and LPWAN attendance sensing. See README.md.",
  "creators": [
   {
    "name": "Sethupathy, Dhanisha",
